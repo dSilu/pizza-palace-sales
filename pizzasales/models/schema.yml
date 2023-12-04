@@ -1,14 +1,18 @@
 version: 2
-
 models:
-    - name: stg_orders
-      description: A cleaned table derived from the orders source table.
-
-
-    - name: stg_order_details
-      description: A cleaned order details table with price of each order and order type
-
-
-    - name: fct_orders
-      description: A order summary table prepared by joining orders and orderdetails to show the total quantity and amount of the order.
-      
+  - name: stg_orders
+    description: A cleaned table derived from the orders source table.
+  - name: stg_order_details
+    description: A cleaned order details table with price of each order and order type
+  - name: fct_orders
+    description: A order summary table prepared by joining orders and orderdetails
+      to show the total quantity and amount of the order.
+    columns:
+      - name: ORDER_ID
+        description: ""
+      - name: ORDER_DATETIME
+        description: ""
+      - name: TOTAL_ORDER_QUANTITY
+        description: ""
+      - name: TOTAL_ORDER_AMOUNT
+        description: ""
