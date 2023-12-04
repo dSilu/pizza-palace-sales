@@ -7,3 +7,8 @@ models:
 
     - name: stg_order_details
       description: A cleaned order details table with price of each order and order type
+
+
+    - name: fct_orders
+      description: A order summary table prepared by joining orders and orderdetails to show the total quantity and amount of the order.
+      
