@@ -1,0 +1,9 @@
+version: 2
+
+models:
+    - name: stg_orders
+      description: A cleaned table derived from the orders source table.
+
+
+    - name: stg_order_details
+      description: A cleaned order details table with price of each order and order type
