@@ -1,17 +1,16 @@
 version: 2
 
-source:
-    - name: pizza_place_sales
-      database: PIZZAPLACE
-      schema: RAW
+sources:
+    - name: pizza_place
+      schema: raw
       tables:
-        - name: ORDERS
+        - name: orders
           description: Pizza Place Order table
-          
-          
-        - name: ORDER_DETAILS
+
+
+        - name: order_details
           description: Pizza Place order detail table.
 
-        - name: PIZZAS
+        - name: pizzas
           description: Pizza Place Pizzas with their price, size and type.
-        
+

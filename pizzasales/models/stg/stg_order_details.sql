@@ -8,15 +8,16 @@ WITH order_details as (
         order_id,
         pizza_id,
         quantity as order_quantity
-    FROM {{ source('pizza_place_sales', 'ORDER_DETAILS') }}
+    FROM {{ ref('src_order_details') }}
 ),
 
 pizza_price as (
     SELECT
         id as piza_order_id,
-        type_id as pizza_type
-        size as piza_size,
+        type_id as pizza_type,
+        size as pizza_size,
         price
+    FROM {{ ref('src_pizzas') }}
 )
 
 SELECT
@@ -24,7 +25,7 @@ SELECT
     od.order_id,
     pp.pizza_type,
     od.order_quantity,
-    pp.piza_size,
+    pp.pizza_size,
     (od.order_quantity * pp.price) as order_amount
 FROM order_details od 
 INNER JOIN pizza_price pp 

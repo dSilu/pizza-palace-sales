@@ -11,6 +11,6 @@ WITH stg_orders as (
         QUARTER(date) as order_quarter,
         MONTHNAME(date) as order_month,
         DAYNAME(date) as order_day
-    FROM {{ source('pizza_place_sales', 'ORDERS') }}
+    FROM {{ ref('src_orders') }}
 )
 SELECT * FROM stg_orders
