@@ -3,6 +3,3 @@
 **Lineage**
 
 ![](lineage.png)
-
-
-[Docs](./index.html)
