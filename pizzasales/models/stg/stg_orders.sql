@@ -6,6 +6,7 @@
 WITH stg_orders as (
     SELECT
         id as order_id,
+        date as order_date,
         TO_TIMESTAMP(CONCAT(date::string, ' ',time), 'YYYY-MM-DD HH24:MI:SS') AS order_datetime,
         year(date) as order_year,
         QUARTER(date) as order_quarter,
