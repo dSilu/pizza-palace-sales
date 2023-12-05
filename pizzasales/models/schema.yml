@@ -58,10 +58,10 @@ models:
       to show the total quantity and amount of the order.
     columns:
       - name: ORDER_ID
-        description: ""
+        description: "Order id"
       - name: ORDER_DATETIME
-        description: ""
+        description: "date time stamp of order"
       - name: TOTAL_ORDER_QUANTITY
-        description: ""
+        description: "Sum of number of pizzas ordered."
       - name: TOTAL_ORDER_AMOUNT
-        description: ""
+        description: "Sum of amount of pizzas ordered."
