@@ -10,8 +10,10 @@ WITH stg_orders as (
         TO_TIMESTAMP(CONCAT(date::string, ' ',time), 'YYYY-MM-DD HH24:MI:SS') AS order_datetime,
         year(date) as order_year,
         QUARTER(date) as order_quarter,
-        MONTHNAME(date) as order_month,
-        DAYNAME(date) as order_day
+        MONTHNAME(date) as order_month_name,
+        MONTH(date) as order_month,
+        DAYNAME(date) as order_day,
+        DAYOFWEEK(date) as order_week_day
     FROM {{ ref('src_orders') }}
 )
 SELECT * FROM stg_orders
