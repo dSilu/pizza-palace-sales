@@ -5,4 +5,4 @@
 ![](lineage.png)
 
 
-[Docs](./target/index.html)
+[Docs](./index.html)
