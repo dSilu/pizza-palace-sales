@@ -19,4 +19,4 @@ SELECT
     (od.order_quantity * pp.price) as order_amount
 FROM order_details od 
 INNER JOIN pizza_price pp 
-    ON od.pizza_id = pp.piza_order_id
+    ON od.pizza_id = pp.pizza_order_id

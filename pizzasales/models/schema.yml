@@ -2,8 +2,57 @@ version: 2
 models:
   - name: stg_orders
     description: A cleaned table derived from the orders source table.
+    columns:
+      - name: id
+        description: Primary column for source order table.
+      - name: date
+        description: Order placed on date
+      - name: time
+        description: Order placed time
+
+
+
   - name: stg_order_details
-    description: A cleaned order details table with price of each order and order type
+    description: A cleaned order details table with price of each order and order type.
+    columns:
+      - name: sales_id
+        description: order details id
+        tests:
+          - not_null
+          - unique
+      
+      - name: order_id
+        description: order id
+        tests:
+          - not_null
+
+      - name: pizza_type
+        description: Type of pizza. It is a field from the seeds data.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('pizza_types.sql')
+              field: pizza_type_id
+
+
+      - name: order_quantity
+        description: Quantity of order of particular pizza type.
+        tests:
+          - not_null
+      
+      - name: pizza_size
+        description: size of the pizza
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['M','L', 'S', 'XL', 'XXL']
+
+      - name: order_amount
+        description: amount paied for the pizza.
+        tests:
+          - not_null
+        
+
   - name: fct_orders
     description: A order summary table prepared by joining orders and orderdetails
       to show the total quantity and amount of the order.

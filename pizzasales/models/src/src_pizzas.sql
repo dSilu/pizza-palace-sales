@@ -1,6 +1,6 @@
 WITH RAW_PIZZAS AS (
     SELECT 
-        id as piza_order_id,
+        id as pizza_order_id,
         type_id as pizza_type,
         size as pizza_size,
         price
