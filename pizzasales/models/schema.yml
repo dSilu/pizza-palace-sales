@@ -1,23 +1,14 @@
 version: 2
+
 models:
   - name: stg_orders
     description: A cleaned table derived from the orders source table.
     columns:
-      - name: id
-        description: Primary column for source order table.
+      - name: order_id
+        description: Id of the order. Primary column for table stg_orders.
         tests:
+          - not_null
           - unique
-          - not_null
-
-      - name: date
-        description: Order placed on date
-        tests:
-          - not_null
-
-      - name: time
-        description: Order placed time
-        tests:
-          - not_null
 
 
 

@@ -6,10 +6,26 @@ sources:
       tables:
         - name: orders
           description: Pizza Place Order table
+          
+          columns:
+            - name: id
+              description: Primary column for source order table.
+              tests:
+                - unique
+                - not_null
+
+            - name: date
+              description: Order placed on date
+              tests:
+                - not_null
+
+            - name: time
+              description: Order placed time
+              tests:
+                - not_null
 
         - name: order_details
           description: Pizza Place order detail table.
 
         - name: pizzas
           description: Pizza Place Pizzas with their price, size and type.
-
