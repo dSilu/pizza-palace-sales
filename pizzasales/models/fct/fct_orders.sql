@@ -3,10 +3,10 @@
 ) }}
 
 WITH stg_order_details AS (
-    select * from {{ ref('stg_order_details') }}
+    select * from {{ ref('dim_order_details') }}
 ),
 stg_orders AS (
-    SELECT * FROM {{ ref('stg_orders') }}
+    SELECT * FROM {{ ref('dim_orders') }}
 ) 
 
 SELECT

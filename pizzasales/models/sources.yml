@@ -6,26 +6,63 @@ sources:
       tables:
         - name: orders
           description: Pizza Place Order table
-          
           columns:
             - name: id
               description: Primary column for source order table.
               tests:
                 - unique
                 - not_null
-
             - name: date
               description: Order placed on date
               tests:
                 - not_null
-
             - name: time
               description: Order placed time
               tests:
                 - not_null
-
         - name: order_details
           description: Pizza Place order detail table.
-
+          columns:
+            - name: order_details_id
+              description: Unique identifier for order details.
+              tests:
+                - unique
+                - not_null
+            - name: order_id
+              description: Order id for the Order.
+                There can be multiple order Ids.
+              tests:
+                - not_null
+            - name: pizza_id
+              description: Unique identifier for Pizzas respect to its size and type.
+              tests:
+                - not_null
+            - name: quantity
+              description: Order quantity.
+                Integer.
+              tests:
+                - not_null
         - name: pizzas
           description: Pizza Place Pizzas with their price, size and type.
+          columns:
+            - name: id 
+              description: Unique identifier of the pizza for the particualr id.
+              tests:
+                - not_null
+                - unique
+            - name: type_id 
+              description: Identifier for the pizza based on its name.
+              tests:
+                - not_null
+            - name: size
+              description: Size of the Pizza.
+              tests:
+                - not_null
+                - accepted_values:
+                    values:
+                      - S 
+                      - M 
+                      - L
+                      - XL 
+                      - XXL
+

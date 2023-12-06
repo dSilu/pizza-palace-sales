@@ -1,7 +1,13 @@
 version: 2
 
 models:
-  - name: stg_orders
+  - name: src_order_details
+    description: Staging table for order_details.
+  - name: src_pizzas
+    description: Staging table for pizzas.
+  - name: src_orders 
+    description: Staging tabe for order table.
+  - name: dim_orders
     description: A cleaned table derived from the orders source table.
     columns:
       - name: order_id
@@ -9,23 +15,72 @@ models:
         tests:
           - not_null
           - unique
-
-
-
-  - name: stg_order_details
+      - name: order_date
+        description: Date of the order.
+      - name: order_datetime
+        description: Datetime of the order.
+          Created by concatinating order date and order time.
+        tests:
+          - not_null
+      - name: order_year
+        description: Order year.
+          Extracted from the order date.
+        tests:
+          - not_null
+      - name: order_quarter
+        description: Quarter of the year.
+          Extracted from the date.
+        tests:
+          - not_null
+      - name: order_month_name
+        description: Month name extracted from order date.
+          Month name as string.
+        tests:
+          - not_null
+      - name: order_month
+        description: Month of the order.
+          Extracted from the date.
+          Integer type.
+        tests:
+          - not_null
+      - name: order_day
+        description: Order week day in integer.
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Mon 
+                - Tue 
+                - Wed 
+                - Thu 
+                - Fri
+                - Sat 
+                - Sun
+      - name: order_week_day
+        description: Week day of the order.
+          String type.
+        tests:
+          - accepted_values:
+              values:
+                - 0
+                - 1
+                - 2
+                - 3
+                - 4
+                - 5
+                - 6
+  - name: dim_order_details
     description: A cleaned order details table with price of each order and order type.
     columns:
       - name: sales_id
         description: order details id
         tests:
           - not_null
-          - unique
-      
+          - unique 
       - name: order_id
         description: order id
         tests:
           - not_null
-
       - name: pizza_type
         description: Type of pizza. It is a field from the seeds data.
         tests:
@@ -33,25 +88,63 @@ models:
           - relationships:
               to: ref('pizza_types.sql')
               field: pizza_type_id
-
-
       - name: order_quantity
         description: Quantity of order of particular pizza type.
         tests:
           - not_null
-      
       - name: pizza_size
         description: size of the pizza
         tests:
           - not_null
           - accepted_values:
               values: ['M','L', 'S', 'XL', 'XXL']
-
       - name: order_amount
         description: amount paied for the pizza.
         tests:
           - not_null
-        
+  - name: dim_pizzas
+    description: pizzas order summary table.
+    columns:
+      - name: pizza_order_id
+        description: A surrogate key prepared by joining pizza type and pizza size.
+          Identifies an order.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('src_pizzas')
+              field: pizza_order_id
+      - name: pizza_id
+        description: Pizza type based on pizza name and ingredients.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('pizza_types')
+              field: pizza_type_id
+      - name: pizza_name 
+        description: Name of the Pizza on menu.
+      - name: pizza_category 
+        description: Category of the pizza based on menu.
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Chicken
+                - Classic
+                - Supreme
+                - Veggie
+      - name: pizza_size
+        description: Size of the Pizza.
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - S 
+                - M 
+                - L 
+                - XL 
+                - XXL
+      - name: used_ingredients
+        description: Ingredients of the Pizza.
 
   - name: fct_orders
     description: A order summary table prepared by joining orders and orderdetails
@@ -59,8 +152,16 @@ models:
     columns:
       - name: ORDER_ID
         description: "Order id"
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              to: ref('dim_order_details')
+              field: order_id
       - name: ORDER_DATETIME
         description: "date time stamp of order"
+        tests:
+          - not_null
       - name: TOTAL_ORDER_QUANTITY
         description: "Sum of number of pizzas ordered."
       - name: TOTAL_ORDER_AMOUNT

@@ -33,10 +33,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   pizzasales:
-    stg:
-      +schema: mart
+    src:
+      +schema: stg
+    fct:
+      +schema: fct
+    dim:
+      +schema: dim
 
 
 seeds:
   pizzasales:
-    +schema: seed
+    +schema: stg
