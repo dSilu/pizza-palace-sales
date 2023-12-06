@@ -14,6 +14,6 @@ WITH stg_orders as (
         MONTH(date) as order_month,
         DAYNAME(date) as order_day,
         DAYOFWEEK(date) as order_week_day
-    FROM {{ ref('src_orders') }}
+    FROM {{ source('pizza_place', 'orders') }}
 )
 SELECT * FROM stg_orders

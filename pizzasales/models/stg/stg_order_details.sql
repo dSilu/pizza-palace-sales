@@ -3,11 +3,21 @@
 ) }}
 
 WITH order_details as (
-    SELECT * FROM {{ ref('src_order_details') }}
+    SELECT 
+        order_details_id,
+        order_id,
+        pizza_id,
+        quantity as order_quantity
+    FROM {{ source('pizza_place', 'order_details') }}
 ),
 
 pizza_price as (
-    SELECT * FROM {{ ref('src_pizzas') }}
+    SELECT 
+        id as pizza_order_id,
+        type_id as pizza_type,
+        size as pizza_size,
+        price
+    FROM {{ source('pizza_place', 'pizzas') }}
 )
 
 SELECT
