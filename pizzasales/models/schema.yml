@@ -166,3 +166,17 @@ models:
         description: "Sum of number of pizzas ordered."
       - name: TOTAL_ORDER_AMOUNT
         description: "Sum of amount of pizzas ordered."
+  - name: order_percentage_based_on_size
+    description: An aggregated table.
+      Total sales based on size and percentage sales.
+    columns:
+      - name: pizza_size
+        description: Size of the Pizza.
+      - name: total_orders
+        description: Number of orders placed for the particular size of the pizza.
+      - name: order_percentage 
+        description: Percentage of the order of the particular size.
+      - name: total_sales
+        description: Total amount of orders placed.
+      - name: sales_percentage
+        description: Percentage sales of the particular size Pizza.
