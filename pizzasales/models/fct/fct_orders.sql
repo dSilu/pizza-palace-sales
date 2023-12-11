@@ -1,4 +1,5 @@
 {{ config(
+    alias='pizza_orders',
     materialized='table'
 ) }}
 

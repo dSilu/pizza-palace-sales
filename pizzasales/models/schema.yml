@@ -9,6 +9,7 @@ models:
     description: Staging tabe for order table.
   - name: dim_orders
     description: A cleaned table derived from the orders source table.
+      Materialized as incremental.
     columns:
       - name: order_id
         description: Id of the order. Primary column for table stg_orders.
@@ -166,3 +167,33 @@ models:
         description: "Sum of number of pizzas ordered."
       - name: TOTAL_ORDER_AMOUNT
         description: "Sum of amount of pizzas ordered."
+  - name: order_percentage_based_on_size
+    description: An aggregated table.
+      Total sales based on size and percentage sales.
+    columns:
+      - name: pizza_size
+        description: Size of the Pizza.
+        test:
+          - unique
+          - not_null
+      - name: total_orders
+        description: Number of orders placed for the particular size of the pizza.
+      - name: order_percentage 
+        description: Percentage of the order of the particular size.
+      - name: total_sales
+        description: Total amount of orders placed.
+      - name: sales_percentage
+        description: Percentage sales of the particular size Pizza.
+  - name: pizzawise_orders
+    description: Sales table based on pizza type.
+      Materialized as table.
+    columns:
+      - name: pizza_type
+        description: Type of the pizza based on ingredients and name.
+        tests:
+          - unique
+          - not_null
+      - name: total_orders
+      - name: order_percentage
+      - name: total_sales
+      - name: sales_percentage
