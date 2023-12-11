@@ -3,6 +3,9 @@ version: 2
 models:
   - name: src_order_details
     description: Staging table for order_details.
+    tests:
+      - dbt_expectations.expect_table_column_count_to_equal:
+          value: 7
   - name: src_pizzas
     description: Staging table for pizzas.
   - name: src_orders 
@@ -14,7 +17,7 @@ models:
       - name: order_id
         description: Id of the order. Primary column for table stg_orders.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_to_exist
           - unique
       - name: order_date
         description: Date of the order.

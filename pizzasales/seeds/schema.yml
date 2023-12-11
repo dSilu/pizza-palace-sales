@@ -1,0 +1,23 @@
+version: 2
+
+seeds:
+  - name: pizza_types
+    description: Pizza names and its ingredients.
+    columns:
+      - name: pizza_type
+        description: Unique Identifier of the Pizza.
+      - name: name
+        description: Name of the Pizza.
+        tests:
+          - unique
+      - name: category
+        description: Category of the Pizza based on the ingredients.
+        tests:
+            - accepted_values:
+                values:
+                  - Chicken
+                  - Veggie
+                  - Classic
+                  - Supreme
+      - name: ingredients
+        description: Ingredients used to make the pizza.
