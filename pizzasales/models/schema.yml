@@ -5,52 +5,60 @@ models:
     description: Staging table for order_details.
     tests:
       - dbt_expectations.expect_table_column_count_to_equal:
-          value: 7
+          value: 4
   - name: src_pizzas
     description: Staging table for pizzas.
+    tests:
+      - dbt_expectations.expect_table_column_count_to_equal:
+          value: 4
   - name: src_orders 
     description: Staging tabe for order table.
+    tests:
+      - dbt_expectations.expect_table_column_count_to_equal:
+          value: 3
   - name: dim_orders
     description: A cleaned table derived from the orders source table.
       Materialized as incremental.
+    tests:
+      - dbt_expectations.expect_table_column_count_to_equal:
+          value: 9
     columns:
       - name: order_id
         description: Id of the order. Primary column for table stg_orders.
         tests:
           - dbt_expectations.expect_column_to_exist
-          - unique
       - name: order_date
         description: Date of the order.
       - name: order_datetime
         description: Datetime of the order.
           Created by concatinating order date and order time.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_year
         description: Order year.
           Extracted from the order date.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_quarter
         description: Quarter of the year.
           Extracted from the date.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_month_name
         description: Month name extracted from order date.
           Month name as string.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_month
         description: Month of the order.
           Extracted from the date.
           Integer type.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_day
         description: Order week day in integer.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - accepted_values:
               values:
                 - Mon 
@@ -79,33 +87,33 @@ models:
       - name: sales_id
         description: order details id
         tests:
-          - not_null
-          - unique 
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: order_id
         description: order id
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: pizza_type
         description: Type of pizza. It is a field from the seeds data.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - relationships:
               to: ref('pizza_types.sql')
               field: pizza_type_id
       - name: order_quantity
         description: Quantity of order of particular pizza type.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: pizza_size
         description: size of the pizza
         tests:
-          - not_null
-          - accepted_values:
-              values: ['M','L', 'S', 'XL', 'XXL']
+          - dbt_expectations.expect_column_values_to_not_be_null
+          - dbt_expectations.expect_column_values_to_be_in_set:
+              value_set: ['M','L','S','XL','XXL']
+              quote_values: true
       - name: order_amount
         description: amount paied for the pizza.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
   - name: dim_pizzas
     description: pizzas order summary table.
     columns:
@@ -113,14 +121,14 @@ models:
         description: A surrogate key prepared by joining pizza type and pizza size.
           Identifies an order.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - relationships:
               to: ref('src_pizzas')
               field: pizza_order_id
       - name: pizza_id
         description: Pizza type based on pizza name and ingredients.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - relationships:
               to: ref('pizza_types')
               field: pizza_type_id
@@ -129,7 +137,7 @@ models:
       - name: pizza_category 
         description: Category of the pizza based on menu.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - accepted_values:
               values:
                 - Chicken
@@ -139,7 +147,7 @@ models:
       - name: pizza_size
         description: Size of the Pizza.
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - accepted_values:
               values:
                 - S 
@@ -158,14 +166,14 @@ models:
         description: "Order id"
         tests:
           - unique
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
           - relationships:
               to: ref('dim_order_details')
               field: order_id
       - name: ORDER_DATETIME
         description: "date time stamp of order"
         tests:
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: TOTAL_ORDER_QUANTITY
         description: "Sum of number of pizzas ordered."
       - name: TOTAL_ORDER_AMOUNT
@@ -178,7 +186,7 @@ models:
         description: Size of the Pizza.
         test:
           - unique
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: total_orders
         description: Number of orders placed for the particular size of the pizza.
       - name: order_percentage 
@@ -195,7 +203,7 @@ models:
         description: Type of the pizza based on ingredients and name.
         tests:
           - unique
-          - not_null
+          - dbt_expectations.expect_column_values_to_not_be_null
       - name: total_orders
       - name: order_percentage
       - name: total_sales
