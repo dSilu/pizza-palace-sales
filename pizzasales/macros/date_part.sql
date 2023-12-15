@@ -6,9 +6,9 @@
         Morning
     {% elif hour>=11 and hour < 14 %}
         Noon
-    {% elif hour>=14 and hour < 17%}
+    {% elif hour>=14 and hour < 17 %}
         Afternoon
-    {% elif hour >=17 and hour < 21%}
+    {% elif hour >=17 and hour < 21 %}
         Evening
     {% else %}
         Night

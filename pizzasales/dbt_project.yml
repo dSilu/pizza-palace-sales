@@ -43,3 +43,6 @@ models:
 seeds:
   pizzasales:
     +schema: stg
+
+vars:
+    "dbt_date:time_zone": "Asia/Kolkata"
