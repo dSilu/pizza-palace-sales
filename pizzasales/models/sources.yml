@@ -66,4 +66,9 @@ sources:
                       - L
                       - XL 
                       - XXL
+        - name: macro_test
+          description: a test table for macros 
+          columns:
+            - name: id 
+            - name: what_date
 

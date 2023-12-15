@@ -18,7 +18,7 @@
 {% macro get_name_of_the_date(any_date) %}
     {% do print(any_date) %}
     {% set query %}
-        select to_date({{ any_date|string }}) as given_date, dayname(date({{ any_date }})) as day_of_week_short_name
+        select date({{ any_date|string }}) as given_date, dayname(date({{ any_date }})) as of_week_short_name
     {% endset %}
     {% set result = run_query(query) %}
     {% do result.print_table() %}

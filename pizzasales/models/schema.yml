@@ -208,3 +208,4 @@ models:
       - name: order_percentage
       - name: total_sales
       - name: sales_percentage
+  - name: test_non_weekend_data
